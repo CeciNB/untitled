@@ -83,7 +83,6 @@ public class EmployeeDAO { //DAO Data Access Object
     public void editEmployee (int id, EmployeeDTO emp){
         try{
             PreparedStatement updateEmp = connection.prepareStatement("UPDATE emp SET ENAME =?,JOB=?,MGR=?,HIREDATE=?,SAL=?,COMM=?,deptno=? WHERE empNO = ?;");
-            //insertEmp.setInt(1,emp.getEmpno());
             updateEmp.setString(1,emp.getEname());
             updateEmp.setString(2,emp.getJob());
             updateEmp.setInt(3,emp.getMgr());
