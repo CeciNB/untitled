@@ -1,6 +1,6 @@
 import java.sql.Date;
 
-public class EmployeeDTO { //DAO Data Transfer Object
+public class EmployeeDTO { //DTO Data Transfer Object
     private int empno;
     private String ename;
     private String job;

@@ -52,7 +52,7 @@ public class DepartmentDAO { //DAO Data Access Object
 
             int rowsInserted = updateDept.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("A existing department was updated successfully!");
+                System.out.println(rowsInserted + " existing department was updated successfully!");
             }
 
         }catch (SQLException e){
@@ -74,5 +74,4 @@ public class DepartmentDAO { //DAO Data Access Object
             e.printStackTrace();
         }
     }
-
 }

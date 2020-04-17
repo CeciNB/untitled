@@ -40,7 +40,7 @@ public class Employee /*implements Comparator */{
 
     public Map getAllEmployees(){
         try {
-            DatabaseConnectionManager connectionManager = new DatabaseConnectionManager();
+            DatabaseConnectionManager connectionManager = DatabaseConnectionManager.getInstance();
             //Opret forbindelse til MySQL database
             Connection forbindelseTilMySQL = connectionManager.getConnection();
             //Opret statement

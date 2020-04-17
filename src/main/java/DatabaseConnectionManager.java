@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -5,32 +6,37 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class DatabaseConnectionManager {
-    private final String HOST;
-    private final String USERNAME;
-    private final String PASSWORD;
+    private static DatabaseConnectionManager instance;
+    private Connection connection;
 
-    public DatabaseConnectionManager() {
-        String url = "";
-        String username = "";
-        String password = "";
+    private DatabaseConnectionManager() {
+        Properties poop = new Properties();
+        String propFileName = "aplication.properties";
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
+        try {
+            poop.load(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String host = poop.getProperty("url");
+        String username = poop.getProperty("username");
+        String password = poop.getProperty("password");
 
         try {
-            Properties prop = new Properties();
-            String propFileName = "aplication.properties";
-            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
-            prop.load(inputStream);
-            url = prop.getProperty("url");
-            username = prop.getProperty("username");
-            password = prop.getProperty("password");
-        } catch (Exception ignored){
+            this.connection = DriverManager.getConnection(host, username, password);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
-
-        this.HOST = url;
-        this.USERNAME = username;
-        this.PASSWORD = password;
     }
 
-    public Connection getConnection()throws SQLException {
-        return DriverManager.getConnection(HOST,USERNAME,PASSWORD);
+    public static DatabaseConnectionManager getInstance(){
+        if (instance == null){
+            instance = new DatabaseConnectionManager();
+        }
+        return instance;
+    }
+
+    public Connection getConnection(){
+        return connection;
     }
 }
